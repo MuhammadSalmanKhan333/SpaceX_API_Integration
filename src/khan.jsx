@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LuChevronDown, LuChevronLeft } from "react-icons/lu";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -9,9 +9,11 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const { id } = useParams();
   const pathname = window.location.pathname;
+
+  // Regex to check for /mission/ followed by a number
   const missionRegex = /^\/mission\/\d+/;
+  // Regex to check for /history/ followed by a number
   const historyRegex = /^\/history\/\d+/;
 
   return (
@@ -41,7 +43,6 @@ const Sidebar = () => {
       </div>
 
       {/* Sidebar Menu */}
-      {/* <Router> */}
       <nav className="flex-1 mt-16">
         <ul className="space-y-5">
           <li>
@@ -87,7 +88,7 @@ const Sidebar = () => {
           <li>
             <Link
               to="/mission"
-              className={`flex items-center text-[#9197B3] py-3 px-2 hover:bg-[#6060c0] hover:text-white rounded-lg ${
+              className={`flex items-center text-[#9197B3] py-3 px-2 hover:bg-[#6060c0] hover:text-white rounded-lg transition duration-300 ${
                 pathname === "/mission" || missionRegex.test(pathname)
                   ? "bg-[#6060c0] text-white"
                   : ""
@@ -107,12 +108,11 @@ const Sidebar = () => {
           </li>
         </ul>
       </nav>
-      {/* </Router> */}
       {/* Upgrade Section */}
       {isOpen && (
-        <div className="bg-purple-600 rounded-2xl p-6   text-white w-full text-center mb-10">
+        <div className="bg-purple-600 rounded-2xl p-6 text-white w-full text-center mb-10">
           <p className="text-sm mb-2 font-semibold pb-2">
-            Upgrade to PRO to get access all Features!
+            Upgrade to PRO to get access to all Features!
           </p>
           <button className="bg-white text-[#4925E9] px-[40px] py-2 rounded-2xl font-semibold text-sm font-poppins hover:bg-gray-100 transition duration-300">
             Get Pro Now!

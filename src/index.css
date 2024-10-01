@@ -4,4 +4,5 @@
 
 body {
   background: #fafbff;
+  @apply font-poppins;
 }

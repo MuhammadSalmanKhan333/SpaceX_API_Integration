@@ -1,11 +1,15 @@
 import React from "react";
 import SideBar from "./sidebar/SideBar";
+import { Outlet } from "react-router-dom";
 
-const layout = () => {
+const layout = (props) => {
+  // console.log(props.Children);
   return (
-    <div>
+    <>
       <SideBar />
-    </div>
+      <Outlet />
+      {/* {props.children} */}
+    </>
   );
 };
 
