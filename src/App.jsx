@@ -4,6 +4,7 @@ import MainContent from "./components/MainContent/MainContent";
 import History from "./components/pages/History/History";
 import Mission from "./components/pages/Mission/Missions";
 import { Routes, Route } from "react-router-dom";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/mission" element={<Mission />}></Route>
           <Route path="/mission/:id" element={<Mission />}></Route>
         </Route>
+        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </div>
   );

@@ -35,20 +35,40 @@ const History = () => {
   };
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
-    setCurrentPage(1);
   };
-  console.log(sortBy);
 
-  const filterData = tableData.filter((data) =>
-    data.title.toLowerCase().includes(search.toLocaleLowerCase())
-  );
+  const filterData = tableData
+    .filter((data) =>
+      data.title.toLowerCase().includes(search.toLocaleLowerCase())
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.event_date_utc);
+      const dateB = new Date(b.event_date_utc);
+      if (sortBy === "new") {
+        return dateB - dateA;
+      } else {
+        return dateA - dateB;
+      }
+    });
 
+  [];
+
+  // const debounce = (callback, delay) => {
+  //   let timer;
+  //   return function () {
+  //     // clearTimeout(timer);
+  //     timer = setTimeout(() => {
+  //       callback();
+  //     }, delay);
+  //   };
+  // };
   // const debounceFilteredData = debounce((search) => {
   //   const filtered = tableData.filter((data) =>
   //     data.title.toLowerCase().includes(search.toLowerCase())
   //   );
   //   setTableData(filtered);
-  // }, 300);
+  // }, 0);
+  // console.log(tableData);
 
   // useEffect(() => {
   //   debounceFilteredData(search);
@@ -75,7 +95,7 @@ const History = () => {
   };
   return (
     <div className="flex-1 overflow-y-scroll xl:px-[71px] pt-[110px] font-semibold text-2xl">
-      <div className="bg-white w-full min-h-[800px] border-2 shadow-xl border-green-600 rounded-3xl pt-9">
+      <div className="bg-white w-full min-h-[800px] shadow-xl rounded-3xl pt-9">
         <div className="flex w-full gap-6 flex-col md:flex-row md:justify-between items-center px-10">
           <h1 className="font-semibold text-2xl text-[#000000]">History</h1>
           <div className="flex gap-5 items-center flex-wrap">
@@ -83,7 +103,7 @@ const History = () => {
               <img
                 className="absolute top-2 left-2"
                 src="/assets/search.svg"
-                alt="image not found"
+                alt="search icon"
               />
               <input
                 className="input-style"

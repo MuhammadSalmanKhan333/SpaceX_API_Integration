@@ -56,7 +56,7 @@ const HistoryTable = ({ tableData, loading, limit, currentPage, error }) => {
                         {data.links.reddit && (
                           <a href={data.links.reddit || ""} target="_blank">
                             <img
-                              className="size-14 rounded inline"
+                              className="w-14 h-6 rounded inline"
                               src="/assets/reddit.svg"
                               alt=""
                             />
