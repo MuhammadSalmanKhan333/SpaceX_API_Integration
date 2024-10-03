@@ -1,146 +1,134 @@
 import React, { useEffect, useState } from "react";
-import { LuChevronDown, LuChevronLeft } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import HistoryTable from "../../TableComponent/HistoryTable";
+import axios from "axios";
+import Pagination from "../../paginationComponent/Pagination";
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+const History = () => {
+  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState("new"); // New or Old
 
-  const handleSideBar = () => {
-    setIsOpen(!isOpen);
+  useEffect(() => {
+    const getHistoryData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.spacexdata.com/v3/history"
+        );
+        setTableData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getHistoryData();
+  }, []);
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
   };
 
-  const pathname = window.location.pathname;
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value); // Set sort order when dropdown changes
+    setCurrentPage(1); // Reset to first page when sorting
+  };
 
-  // Regex to check for /mission/ followed by a number
-  const missionRegex = /^\/mission\/\d+/;
-  // Regex to check for /history/ followed by a number
-  const historyRegex = /^\/history\/\d+/;
+  // Filter based on the search input
+  const filteredData = tableData
+    .filter((data) => data.title.toLowerCase().includes(search.toLowerCase()))
+    // Sort by event date based on sortOrder (new or old)
+    .sort((a, b) => {
+      const dateA = new Date(a.event_date_utc);
+      const dateB = new Date(b.event_date_utc);
+
+      if (sortOrder === "new") {
+        return dateB - dateA; // Newest first
+      } else {
+        return dateA - dateB; // Oldest first
+      }
+    });
+
+  const limit = 5;
+  const totalPages = Math.ceil(filteredData.length / limit);
+
+  const handlePagination = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const previousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
-    <div
-      className={`h-screen bg-white pt-9 flex flex-col relative duration-300 shadow-xl shadow-[#E2ECF9] ${
-        isOpen ? "w-72 px-7" : "w-20 px-2 items-center"
-      }`}
-    >
-      <div className="absolute top-10 -right-5 border-2 border-gray-300 cursor-pointer bg-white rounded-full hover:bg-[#6060c0] hover:text-white">
-        <LuChevronLeft
-          className={`size-7 ${isOpen ? "rotate-180" : ""}`}
-          onClick={handleSideBar}
-        />
-      </div>
-      {/* Top logo and profile section */}
-      <div className="flex items-center gap-2">
-        <img
-          className={`${
-            !isOpen || (isOpen && "rotate-[360deg] duration-[1s]")
-          }`}
-          src="/assets/company_logo.svg"
-          alt=""
-        />
-        {isOpen && (
-          <h1 className="text-2xl font-semibold font-poppins ">SpaceX</h1>
-        )}
-      </div>
-
-      {/* Sidebar Menu */}
-      <nav className="flex-1 mt-16">
-        <ul className="space-y-5">
-          <li>
-            <Link
-              to="/"
-              className={`flex items-center text-[#9197B3] py-3 px-2 hover:bg-[#6060c0] hover:text-white rounded-lg transition duration-300 ${
-                pathname === "/" ? "bg-[#6060c0] text-white" : ""
-              }`}
-            >
+    <div className="flex-1 overflow-y-scroll xl:px-[71px] pt-[110px] font-semibold text-2xl">
+      <div className="bg-white w-full min-h-[800px] border-2 shadow-xl border-green-600 rounded-3xl pt-9">
+        <div className="flex w-full gap-6 flex-col md:flex-row md:justify-between items-center px-10">
+          <h1 className="font-semibold text-2xl text-[#000000]">History</h1>
+          <div className="flex gap-5 items-center flex-wrap">
+            <div className="relative">
               <img
-                src="/assets/company-info.svg"
-                alt="Company Info"
-                className="w-6 h-6"
+                className="absolute top-2 left-2"
+                src="/assets/search.svg"
+                alt="Search icon"
               />
-              {isOpen && (
-                <span className="ml-4 text-sm font-poppins font-medium">
-                  Company Info
-                </span>
-              )}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/history"
-              className={`flex items-center text-[#9197B3] py-3 px-2 hover:bg-[#6060c0] hover:text-white rounded-lg transition duration-300 ${
-                pathname === "/history" || historyRegex.test(pathname)
-                  ? "bg-[#6060c0] text-white"
-                  : ""
-              }`}
-            >
-              <img
-                src="/assets/history.svg"
-                alt="History"
-                className="w-6 h-6"
+              <input
+                className="input-style"
+                type="text"
+                onChange={handleChange}
+                value={search}
+                placeholder="Search"
               />
-              {isOpen && (
-                <span className="ml-4 text-sm font-poppins font-medium">
-                  History
-                </span>
-              )}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/mission"
-              className={`flex items-center text-[#9197B3] py-3 px-2 hover:bg-[#6060c0] hover:text-white rounded-lg transition duration-300 ${
-                pathname === "/mission" || missionRegex.test(pathname)
-                  ? "bg-[#6060c0] text-white"
-                  : ""
-              }`}
-            >
-              <img
-                src="/assets/mission.svg"
-                alt="Missions"
-                className="w-6 h-6 bg-[#9197B3]"
-              />
-              {isOpen && (
-                <span className="ml-4 text-sm font-poppins font-medium">
-                  Missions
-                </span>
-              )}
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      {/* Upgrade Section */}
-      {isOpen && (
-        <div className="bg-purple-600 rounded-2xl p-6 text-white w-full text-center mb-10">
-          <p className="text-sm mb-2 font-semibold pb-2">
-            Upgrade to PRO to get access to all Features!
-          </p>
-          <button className="bg-white text-[#4925E9] px-[40px] py-2 rounded-2xl font-semibold text-sm font-poppins hover:bg-gray-100 transition duration-300">
-            Get Pro Now!
-          </button>
-        </div>
-      )}
-
-      {/* Profile section */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <img
-            src="/assets/evano.png"
-            alt="User"
-            className={`rounded-full w-[42px] h-[42px] ${!isOpen ? "" : ""}`}
-          />
-          {isOpen && (
-            <div className="ml-4">
-              <p className="font-medium text-sm font-poppins">Evano</p>
-              <p className="text-[#757575] text-xs font-normal font-poppins">
-                Project Manager
-              </p>
             </div>
-          )}
+            <div className="border min-w-[156px] h-[38px] flex py-2 px-6 bg-[#F9FBFF] rounded-xl">
+              <label
+                className="text-sm text-[#B5B7C0] font-normal"
+                htmlFor="sortBy"
+              >
+                Sort by:
+              </label>
+              <select
+                className="text-sm font-semibold pr-3 bg-[#F9FBFF] focus:outline-none"
+                id="sortBy"
+                onChange={handleSortChange} // Listen to dropdown change
+                value={sortOrder}
+              >
+                <option value="new">New</option>
+                <option value="old">Old</option>
+              </select>
+            </div>
+          </div>
         </div>
-        {isOpen && <LuChevronDown className="size-6 text-[#757575]" />}
+        <HistoryTable
+          tableData={filteredData}
+          loading={loading}
+          error={error}
+          currentPage={currentPage}
+          limit={limit}
+        />
+        <Pagination
+          paginationNumber={[...Array(totalPages).keys()].map((n) => n + 1)}
+          currentPage={currentPage}
+          nextPage={nextPage}
+          previousPage={previousPage}
+          handlePagination={handlePagination}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default History;

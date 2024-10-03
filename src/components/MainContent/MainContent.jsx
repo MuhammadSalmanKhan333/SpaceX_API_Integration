@@ -27,7 +27,7 @@ const MainContent = () => {
     getData();
   }, []);
   return (
-    <div className="flex-1 overflow-scroll xl:px-[71px] pt-[102px] font-semibold text-2xl">
+    <div className="flex-1 overflow-y-scroll xl:px-[71px] pt-[102px] font-semibold text-2xl">
       <h1 className="font-semibold text-3xl text-[#333333]">Company Info</h1>
       {loading && <h1 className="text-2xl text-teal-600">Loading.....</h1>}
       {error && <h1 className="text-2xl text-red-600">Data Fetching Error</h1>}

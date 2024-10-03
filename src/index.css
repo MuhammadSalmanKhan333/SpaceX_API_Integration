@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .input-style {
+    @apply min-w-[216px] h-[38px] rounded-xl bg-[#F9FBFF] border px-10 text-sm  font-normal text-[#B5B7C0] focus:ring-2  outline-8 ring-gray-300 focus:outline-none placeholder:text-sm placeholder:font-normal placeholder:text-[#B5B7C0];
+  }
+}
+
 body {
   background: #fafbff;
   @apply font-poppins;
+}
+.bttn {
+  @apply size-8 hover:outline-1 border border-[#EEEEEE] bg-[#F5F5F5] text-xs text-black cursor-pointer;
+}
+.active {
+  @apply bg-[#5932EA] text-white;
+}
+.viewbtn {
+  @apply border-2 border-[#16C09861] bg-[#16C09861] text-[#008767] text-sm hover:bg-teal-600 cursor-pointer hover:text-white px-[1.5rem] py-1 rounded font-medium;
 }
