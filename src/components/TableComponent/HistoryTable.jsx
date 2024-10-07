@@ -24,7 +24,7 @@ const HistoryTable = ({ tableData, loading, limit, currentPage, error }) => {
             </tr>
           )}
           {error && (
-            <tr className="border-none text-teal-500 font-semibold">
+            <tr className="border-none text-red-600 font-semibold">
               <td>Error Ocurred While Fetching Data......</td>
             </tr>
           )}

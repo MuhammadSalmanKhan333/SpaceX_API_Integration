@@ -16,11 +16,11 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`h-screen bg-white pt-9 flex flex-col relative duration-300 shadow-xl shadow-[#E2ECF9] ${
+      className={`h-screen bg-white pt-9 flex flex-col z-10 relative duration-300 shadow-xl shadow-[#E2ECF9] ${
         isOpen ? "w-72 px-7" : "w-20 px-2 items-center"
       }`}
     >
-      <div className="absolute top-10 -right-5 border-2 border-gray-300 cursor-pointer bg-white rounded-full hover:bg-[#6060c0] hover:text-white">
+      <div className="absolute top-10 -right-4 border-2 border-gray-300 cursor-pointer bg-white rounded-full hover:bg-[#6060c0] hover:text-white">
         <LuChevronLeft
           className={`size-7 ${isOpen ? "rotate-180" : ""}`}
           onClick={handleSideBar}

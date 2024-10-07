@@ -5,6 +5,7 @@ import History from "./components/pages/History/History";
 import Mission from "./components/pages/Mission/Missions";
 import { Routes, Route } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
+import ViewDetails from "./components/ViewComponent/ViewDetails";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<MainContent />}></Route>
           <Route path="/history" element={<History />}></Route>
-          <Route path="/history/:id" element={<History />}></Route>
+          <Route path="/history/:id" element={<ViewDetails />}></Route>
           <Route path="/mission" element={<Mission />}></Route>
           <Route path="/mission/:id" element={<Mission />}></Route>
         </Route>
