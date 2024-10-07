@@ -1,11 +1,11 @@
 import "./App.css";
 import Layout from "./components/Layout";
 import MainContent from "./components/MainContent/MainContent";
-import History from "./components/pages/History/History";
-import Mission from "./components/pages/Mission/Missions";
+import History from "./pages/History/History";
+import Mission from "./pages/Mission/Missions";
 import { Routes, Route } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
-import ViewDetails from "./components/ViewComponent/ViewDetails";
+import ViewDetails from "./pages/View/ViewDetails";
 
 function App() {
   return (

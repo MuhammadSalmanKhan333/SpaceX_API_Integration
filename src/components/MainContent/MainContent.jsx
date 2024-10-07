@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CompanyInfo from "../companyInfo/CompanyInfo";
+import CompanyInfo from "../../pages/companyInfo/CompanyInfo";
 import HeadquarterInfo from "../HeadquarterInfo/HeadquarterInfo";
 
 const MainContent = () => {

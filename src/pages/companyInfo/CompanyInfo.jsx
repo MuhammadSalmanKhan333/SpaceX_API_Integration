@@ -10,7 +10,7 @@ const CompanyInfo = ({ loading, error, spaceData }) => {
             <div className="flex items-center gap-5 min-w-[216px]">
               <img
                 className="size-[86px] rounded-full"
-                src="/public/assets/company-name.svg"
+                src="/assets/company-name.svg"
                 alt=""
               />
               <div className="">

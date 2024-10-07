@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import HistoryTable from "../../TableComponent/HistoryTable";
+import HistoryTable from "../../components/TableComponent/HistoryTable";
 import axios from "axios";
-import Pagination from "../../paginationComponent/Pagination";
+import Pagination from "../../components/paginationComponent/Pagination";
 
 const History = () => {
   const [tableData, setTableData] = useState([]);
