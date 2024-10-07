@@ -49,7 +49,7 @@ const ViewDetails = () => {
             <p>No Data Found......</p>
           </div>
         )}
-        <div className="flex mt-[106px] gap-16 flex-col items-center md:flex-row">
+        <div className="flex mt-[60px] gap-16 flex-col items-center md:flex-row">
           {/* First Section*/}
           <div className="flex-1 flex flex-col gap-8">
             <h1 className="text-[40px] leading-[3.5rem] font-extrabold text-[#100F0F] mb-4">
